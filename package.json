@@ -1,0 +1,34 @@
+{
+  "name": "e-jazah-backend",
+  "version": "1.0.0",
+  "description": "E-jazah, ijazah backend hyperledger fabric blockchain application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mzunanalfikri/e-jazah-backend.git"
+  },
+  "keywords": ["blockchain", "node", "express", "backend", "REST"],
+  "author": "Muhammad Zunan Alfikri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mzunanalfikri/e-jazah-backend/issues"
+  },
+  "homepage": "https://github.com/mzunanalfikri/e-jazah-backend#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "testRegex": "(/test/.*|(\\.|/)(test))\\.(js)x?$"
+  }
+}
