@@ -4,7 +4,7 @@ const path = require("path")
 const fs = require("fs") 
 
 function buildCCPOrg1() { 
-    const ccpPath = path.resolve(__dirname, '..', '..', '..', 'e-jazah-fabric-network', 
+    const ccpPath = path.resolve(__dirname, '..', '..', 'e-jazah-fabric-network', 
     'organizations', 'peerOrganizations', 'org1.e-jazah.id', 
     'connection-org1.json'); 
 
@@ -40,21 +40,8 @@ function prettyJSONString(inputString) {
     return JSON.stringify(JSON.parse(inputString), null, 2);
 }
 
-function getOffset(currentPage = 1, listPerPage) {
-    return (currentPage - 1) * [listPerPage];
-  }
-  
-function emptyOrRows(rows) {
-  if (!rows) {
-    return [];
-  }
-  return rows;
-}
-
 module.exports = {
-  getOffset,
-  emptyOrRows,
-  buildCCPOrg1,
-  buildWallet,
-  prettyJSONString
+    buildCCPOrg1,
+    buildWallet,
+    prettyJSONString
 }
