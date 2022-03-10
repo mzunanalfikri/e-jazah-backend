@@ -18,7 +18,6 @@ class Chaincode {
         if (this.contract != undefined){
             return this.contract
         }
-        console.log("test 1 2 3 1 2 3")
         const ccp = helper.buildCCPOrg1()
         const wallet = await helper.buildWallet(Wallets, walletPath)
 
@@ -33,6 +32,8 @@ class Chaincode {
         const network = await gateway.getNetwork(channelName)
 
         this.contract = network.getContract(chaincodeName)
+
+        await this.contract.submitTransaction('InitLedger')
 
         return this.contract
     }

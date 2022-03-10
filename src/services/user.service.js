@@ -1,5 +1,6 @@
 const { Chaincode } = require('../configs/fabric.config')
 const jwt = require('jsonwebtoken')
+const pki = require('../utils/pki.util')
 const dotenv =require('dotenv')
 dotenv.config()
 
@@ -19,16 +20,40 @@ async function checkUserCredential(userId, password){
     }
 }
 
-async function registerInstitution(){
+async function registerInstitution(authUser,email, name, level, city, province){
+    let contract = await Chaincode.getContract()
+    const { privateKey, publicKey } = pki.generateKeyPair()
 
+    let result = await contract.submitTransaction('CreateInstitution', authUser, email, name, level, city, province, privateKey, publicKey)
+    return JSON.parse(result.toString())
 }
 
-async function registerUser(){
+async function registerStudent(authUser,nik, name, birthPlace, birthDate){
+    let contract = await Chaincode.getContract()
 
+    let result = await contract.submitTransaction('CreateStudent', authUser, nik, name, birthPlace, birthDate)
+    return JSON.parse(result.toString())
+}
+
+async function getUserProfile(userId){
+    let contract = await Chaincode.getContract()
+
+    let result = await contract.evaluateTransaction("GetUserProfile", userId)
+    return JSON.parse(result.toString())
+}
+
+async function changeUserPassword(userId, userPassword){
+    let contract = await Chaincode.getContract()
+
+    let result = await contract.submitTransaction('UpdateUserPassword', userId, userPassword)
+    // return "hai hai"
+    return JSON.parse(result.toString())
 }
 
 module.exports = {
     checkUserCredential,
     registerInstitution,
-    registerUser
+    registerStudent,
+    getUserProfile,
+    changeUserPassword
 }
