@@ -2,24 +2,29 @@ const express = require('express')
 const router = express.Router()
 const ijazahController = require('../controllers/ijazah.controller')
 const jwt = require('../middlewares/jwt.middleware')
+const multer  = require('multer')
+const os = require('os')
+const upload = multer({dest: os.tmpdir()})
 
 // change ijazah link -> on set to off, off set to on
-router.post('/set-ijazah-link', jwt.authenticateUser, ijazahController.dummy)
-
-// get ijazah by nik, check ijazah link
-router.get('/ijazah/:nik', ijazahController.dummy)
-
-// verify by id
-router.get('/verify-by-id/:id', ijazahController.dummy)
-
-// verify by content
-router.post('/verify-by-content', ijazahController.dummy)
+router.post('/set-link', jwt.authenticateStudent, ijazahController.setIjazahLink)
 
 // create ijazah using csv file
-router.post('/create-ijazah', jwt.authenticateInstitution, ijazahController.dummy)
+router.post('/create', jwt.authenticateInstitution, upload.single('file'), ijazahController.createIjazah)
+
+// get ijazah by nik, check ijazah link
+router.get('/:nik', ijazahController.getIjazahByUserCheckLink)
+
+// verify by id
+router.post('/verify-by-id', ijazahController.verifyIjazahById)
+
+// verify by content
+router.post('/verify-content', ijazahController.verifyIjazahContent)
 
 // get all ijazah
-router.get('/ijazah', jwt.authenticateAdmin, ijazahController.dummy)
+router.get('/', jwt.authenticateAdmin, ijazahController.getAllIjazah)
 
 // get ijazah by institution
-router.get('/ijazah-institution', jwt.authenticateInstitution, ijazahController.dummy)
+router.get('/institution/all', jwt.authenticateInstitution, ijazahController.getIjazahByInstitution)
+
+module.exports = router
