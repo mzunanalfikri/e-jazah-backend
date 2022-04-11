@@ -26,8 +26,8 @@ async function registerInstitution(req, res, next){
             let result = {}
             if (el.length != 5){
                 response.push({
-                    "message" : "Not sufficient row",
-                    "detail" : "CSV must contain email, name, level, city, province"
+                    "row" : i,
+                    "message" : "Row tidak cukup, harus mengandung email, nama, level, kota, dan provinsi"
                 })
                 continue
             }
@@ -35,12 +35,16 @@ async function registerInstitution(req, res, next){
                 result = await user.registerInstitution(req.user.userId, el[0], el[1], el[2], el[3], el[4])
             } catch (error) {
                 response.push({
-                    "message" : "error when input",
+                    "row" : i,
+                    "message" : "Institusi " + el[1] + " telah terdaftar",
                     "detail" : error.toString()
                 })
                 continue
             }
-            response.push(result)
+            response.push({
+                "row" : i,
+                "message" : "Institusi " + result.Name + " berhasil terdaftar dengan username : " + result.ID + " dan password : " + result.PlainPassword
+            })
         }
         res.send(response)
     } catch (error) {
@@ -63,8 +67,8 @@ async function registerStudent(req, res, next){
             let result = {}
             if (el.length != 4){
                 response.push({
-                    "message" : "Not sufficient row",
-                    "detail" : "CSV must contain nik, name, birthdate, birthPlace"
+                    "row" : i,
+                    "message" : "Row tidak cukup, harus mengandung nik, nama, tanggal lahir, dan tempat lahir"
                 })
                 continue
             }
@@ -72,12 +76,17 @@ async function registerStudent(req, res, next){
                 result = await user.registerStudent(req.user.userId, el[0], el[1], el[2], el[3])
             } catch (error) {
                 response.push({
-                    "message" : "error when input",
+                    "row" : i,
+                    "message" : "Siswa " + el[1] + " telah terdaftar",
                     "detail" : error.toString()
                 })
                 continue
             }
-            response.push(result)
+            response.push({
+                "row" : i,
+                "message" : "Siswa " + result.Name + " berhasil terdaftar dengan username : " + result.ID + " dan password : " + result.PlainPassword
+            })
+            // response.push(result)
         }
         res.send(response)
     } catch (error) {

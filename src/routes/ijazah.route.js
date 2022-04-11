@@ -22,9 +22,11 @@ router.post('/verify-by-id', ijazahController.verifyIjazahById)
 router.post('/verify-content', ijazahController.verifyIjazahContent)
 
 // get all ijazah
-router.get('/', jwt.authenticateAdmin, ijazahController.getAllIjazah)
+router.get('/admin/all', jwt.authenticateAdmin, ijazahController.getAllIjazah)
 
 // get ijazah by institution
 router.get('/institution/all', jwt.authenticateInstitution, ijazahController.getIjazahByInstitution)
+
+router.get('/student/all', jwt.authenticateStudent, ijazahController.getIjazahByUser)
 
 module.exports = router

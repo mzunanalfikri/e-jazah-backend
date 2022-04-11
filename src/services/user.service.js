@@ -16,7 +16,9 @@ async function checkUserCredential(userId, password){
     }, process.env.TOKEN_SECRET, {expiresIn:'10000s'})
 
     return {
-        token : accessToken
+        token : accessToken,
+        role : resultObject.Role,
+        id : resultObject.ID
     }
 }
 

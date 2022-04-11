@@ -31,9 +31,19 @@ async function createIjazahLowerEd(institutionId, ijazah){
         try {
             let res = await contract.submitTransaction('CreateIjazahLowerEducation', institutionId, nik, studNumber, gradDate, today, leadName, JSON.stringify(grade) )
             resObject = JSON.parse(res.toString())
-            response.push(resObject)
+            response.push({
+                row : i,
+                message : "Ijazah atasa nama " + resObject.StudentName + ", NIK : " + resObject.NIK + " berhasil dibuat dengan Nomor Ijazah : " + resObject.ID
+            })
+            // response.push(resObject)
         } catch (error) {
-            response.push(error.toString())
+            let msg = error.toString().split("Error:")[2]
+            response.push({
+                row : i,
+                message : msg,
+                detail : error.toString()
+            })
+            // response.push(error.toString())
         }
     }
     return response
@@ -73,9 +83,19 @@ async function createIjazahPT(institutionId, ijazah){
         try {
             let res = await contract.submitTransaction('CreateIjazahPT', institutionId, nik, studNumber, tingkat, programStudi, gelar, singkatanGelar, gradDate, today, leadName, IPK, JSON.stringify(grade) )
             resObject = JSON.parse(res.toString())
-            response.push(resObject)
+            response.push({
+                row : i,
+                message : "Ijazah atasa nama " + resObject.StudentName + ", NIK : " + resObject.NIK + " berhasil dibuat dengan Nomor Ijazah : " + resObject.ID
+            })
+            // response.push(resObject)
         } catch (error) {
-            response.push(error.toString())
+            let msg = error.toString().split("Error:")[2]
+            response.push({
+                row : i,
+                message : msg,
+                detail : error.toString()
+            })
+            // response.push(error.toString())
         }
     }
     return response
@@ -87,9 +107,27 @@ async function getIjazahByUserCheckLink(id){
     return JSON.parse(result.toString())
 }
 
-async function verifyIjazahById(ijazahId){
+async function getIjazahByUser(id){
     let contract = await Chaincode.getContract()
-    let result = await contract.evaluateTransaction('VerifyIjazahById', ijazahId)
+    let result = await contract.evaluateTransaction('GetIjazahByUser', id)
+    return JSON.parse(result.toString())
+}
+
+async function verifyIjazahById(ijazahId){
+    let result = {}
+    try {
+        let contract = await Chaincode.getContract()
+        result = await contract.evaluateTransaction('VerifyIjazahById', ijazahId)
+    } catch (err) {
+        let msg = err.toString().split("Error:")[2]
+        if (msg.includes("exist")){
+            return {
+                notVerified : true
+            }
+        } else {
+            throw err
+        }
+    }
     return JSON.parse(result.toString())
 }
 
@@ -128,5 +166,6 @@ module.exports = {
     verifyIjazahById, 
     getAllIjazah,
     getIjazahByInstitution,
-    verifyIjazahContent
+    verifyIjazahContent,
+    getIjazahByUser
 }

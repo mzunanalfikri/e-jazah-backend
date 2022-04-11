@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const cors = require('cors')
 const port = process.env.PORT || 8080;
 // const programmingLanguagesRouter = require('./src/routes/programmingLanguages.route');
 const testingRouter = require('./src/routes/testing.route')
@@ -8,6 +9,7 @@ const userRouter = require('./src/routes/user.route')
 const ijazahRouter = require('./src/routes/ijazah.route')
 
 app.use(bodyParser.json());
+app.use(cors())
 app.use(
   bodyParser.urlencoded({
     extended: true,

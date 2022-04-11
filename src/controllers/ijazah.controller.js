@@ -41,7 +41,19 @@ async function createIjazah(req, res, next){
 async function getIjazahByUserCheckLink(req, res, next){
     try {
         let id = req.params.nik.toString()
+        console.log("ID check link :", id)
         let response = await ijazah.getIjazahByUserCheckLink(id)
+        res.send(response)
+    } catch (error) {
+        next(error)
+    }
+}
+
+async function getIjazahByUser(req, res, next){
+    try {
+        let id = req.user.userId.toString()
+        console.log("ID :", id)
+        let response = await ijazah.getIjazahByUser(id)
         res.send(response)
     } catch (error) {
         next(error)
@@ -100,5 +112,6 @@ module.exports = {
     verifyIjazahById,
     getAllIjazah,
     getIjazahByInstitution,
-    verifyIjazahContent
+    verifyIjazahContent,
+    getIjazahByUser
 }
