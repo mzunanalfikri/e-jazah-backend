@@ -52,6 +52,9 @@ async function createIjazahLowerEd(institutionId, ijazah){
 async function createIjazahPT(institutionId, ijazah){
     let contract = await Chaincode.getContract()
     let response = []
+    if (ijazah[0].length !== 9){
+        throw new Error("CSV Harus sesuai dengan format.")
+    }
     for (let i = 1; i < ijazah.length; i++) {
         const el = ijazah[i];
         let nik = el[0]
@@ -65,23 +68,24 @@ async function createIjazahPT(institutionId, ijazah){
         let singkatanGelar = el[5]
         let gradDate = el[6]
         let leadName = el[7]
-        let IPK = el[8]
+        let predikat = el[8]
+        // let IPK = el[8]
         let today = getDateToday()
-        let grade = {}
-        for (let j = 9; j < el.length; j++) {
-            const singleGrade = el[j];
-            let matkul = ijazah[0][j].split(";")[0]
-            let credit = ijazah[0][j].split(";")[1]
-            if (singleGrade != ''){
-                grade[matkul] = {
-                    "credit" : credit,
-                    "value" : singleGrade
-                }
-            }
-        }
+        // let grade = {}
+        // for (let j = 9; j < el.length; j++) {
+        //     const singleGrade = el[j];
+        //     let matkul = ijazah[0][j].split(";")[0]
+        //     let credit = ijazah[0][j].split(";")[1]
+        //     if (singleGrade != ''){
+        //         grade[matkul] = {
+        //             "credit" : credit,
+        //             "value" : singleGrade
+        //         }
+        //     }
+        // }
         // console.log(nik, studNumber, leadName, grade)
         try {
-            let res = await contract.submitTransaction('CreateIjazahPT', institutionId, nik, studNumber, tingkat, programStudi, gelar, singkatanGelar, gradDate, today, leadName, IPK, JSON.stringify(grade) )
+            let res = await contract.submitTransaction('CreateIjazahPT', institutionId, nik, studNumber, tingkat, programStudi, gelar, singkatanGelar, gradDate, today, leadName, predikat)
             resObject = JSON.parse(res.toString())
             response.push({
                 row : i,
