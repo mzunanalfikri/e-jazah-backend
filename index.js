@@ -6,6 +6,7 @@ const port = process.env.PORT || 8080;
 // const programmingLanguagesRouter = require('./src/routes/programmingLanguages.route');
 const testingRouter = require('./src/routes/testing.route')
 const userRouter = require('./src/routes/user.route')
+const pdfRouter = require('./src/routes/pdf.route')
 const ijazahRouter = require('./src/routes/ijazah.route')
 
 app.use(bodyParser.json());
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 
 app.use('/', userRouter)
 app.use('/ijazah', ijazahRouter)
+app.use('/pdf', pdfRouter)
 app.use('/testing', testingRouter);
 
 /* Error handler middleware */

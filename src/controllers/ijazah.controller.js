@@ -84,6 +84,7 @@ async function getIjazahByInstitution(req, res, next){
     try {
         let id = req.user.userId.toString()
         let response = await ijazah.getIjazahByInstitution(id)
+        console.log(response)
         res.send(response)
     } catch (error) {
         next(error)

@@ -1,4 +1,6 @@
 const { Chaincode } = require('../configs/fabric.config')
+const stringify = require('json-stringify-deterministic')
+const sortKey = require('sort-keys-recursive')
 
 async function changeUserLink(userId){
     let contract = await Chaincode.getContract()
@@ -29,7 +31,7 @@ async function createIjazahLowerEd(institutionId, ijazah){
         }
         // console.log(nik, studNumber, leadName, grade)
         try {
-            let res = await contract.submitTransaction('CreateIjazahLowerEducation', institutionId, nik, studNumber, gradDate, today, leadName, JSON.stringify(grade) )
+            let res = await contract.submitTransaction('CreateIjazahLowerEducation', institutionId, nik, studNumber, gradDate, today, leadName, stringify(sortKey(grade)) )
             resObject = JSON.parse(res.toString())
             response.push({
                 row : i,
@@ -62,13 +64,13 @@ async function createIjazahPT(institutionId, ijazah){
             continue
         }
         let studNumber = el[1]
-        let tingkat = el[2]
-        let programStudi = el[3]
-        let gelar = el[4]
+        let tingkat = el[2].toLowerCase()
+        let programStudi = el[3].toLowerCase()
+        let gelar = el[4].toLowerCase()
         let singkatanGelar = el[5]
         let gradDate = el[6]
         let leadName = el[7]
-        let predikat = el[8]
+        let predikat = el[8].toLowerCase()
         // let IPK = el[8]
         let today = getDateToday()
         // let grade = {}
@@ -159,7 +161,7 @@ function getDateToday(){
     var mm = String(today.getMonth() + 1).padStart(2, '0'); 
     var yyyy = today.getFullYear();
 
-    return mm + '/' + dd + '/' + yyyy
+    return dd + '/' + mm + '/' + yyyy
 }
 
 module.exports = {
