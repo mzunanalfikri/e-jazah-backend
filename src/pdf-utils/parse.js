@@ -48,7 +48,6 @@ function readAndParsePDF(fileName){
             let id = content[0]
             let level = content[0].split("-")[0]
             let ijazah
-            console.log(data.info)
             if (level === "PT"){
                 ijazah = parseIjazahPT(content)
             } else if (level === "SD" || level === "SMP" || level === "SMA"){

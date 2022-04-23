@@ -28,21 +28,29 @@ async function createIjazahPDF(req, res, next){
 
 async function verifyIjazah(req, res, next){
     try {
+        // res.setHeader("Content-Type", "application/json")
         let file = req.file
         let result = await pdfUtilParse.readAndParsePDF(file.path)
 
         if (result.info.Producer !== "PDFKit"){
-            res.send("Ijazah Tidak Valid")
+            res.send({notVerified:true})
         } else if (result.info.ModDate){
-            res.send("Ijazah Tidak Valid")
+            res.send({notVerified:true})
         }
         let decision = await ijazahService.verifyIjazahContent(result.id, result.ijazah)
         if (decision) {
-            res.send("Ijazah Valid")
+            console.log("Return Trueeee")
+            let ijazah = JSON.parse(result.ijazah)
+            console.log(ijazah)
+            res.send({
+                Name: ijazah.StudentName,
+                Level : ijazah.Level,
+                InstitutionName : ijazah.InstitutionName
+            })
         } else {
-            res.send("Ijazah Tidak Valid")
+            res.send({notVerified:true})
         }
-        res.send(decision)
+        // res.send(decision)
     } catch (error) {
         next(error)
     }
