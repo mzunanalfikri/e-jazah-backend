@@ -113,6 +113,7 @@ async function getIjazahByUserCheckLink(id){
     return JSON.parse(result.toString())
 }
 
+// not used
 async function getIjazahByUser(id){
     let contract = await Chaincode.getContract()
     let result = await contract.evaluateTransaction('GetIjazahByUser', id)

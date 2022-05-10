@@ -110,6 +110,7 @@ async function getUserProfile(req, res, next){
 async function changePassword(req, res, next){
     try {
         let password = req.body.password
+        let oldPassword = req.body.old_password
         let id = req.user.userId.toString()
         if (password == undefined){
             res.statusCode = 402
@@ -117,10 +118,12 @@ async function changePassword(req, res, next){
                 message: "must contain password param"
             })
         }
-        let result = await user.changeUserPassword(id, password)
+        let result = await user.changeUserPassword(id,oldPassword, password)
         res.send(result)
     } catch (error) {
-        next(error)
+        let msg = error.toString().split("Error:")[2]
+        res.statusCode = 500
+        res.send(msg)
     }
 }
 

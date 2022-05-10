@@ -44,10 +44,10 @@ async function getUserProfile(userId){
     return JSON.parse(result.toString())
 }
 
-async function changeUserPassword(userId, userPassword){
+async function changeUserPassword(userId, oldPassword, userPassword){
     let contract = await Chaincode.getContract()
 
-    let result = await contract.submitTransaction('UpdateUserPassword', userId, userPassword)
+    let result = await contract.submitTransaction('UpdateUserPassword', userId, oldPassword, userPassword)
     // return "hai hai"
     return JSON.parse(result.toString())
 }
