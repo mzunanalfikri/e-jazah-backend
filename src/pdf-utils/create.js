@@ -52,9 +52,9 @@ async function createIjazahPDFPT(ijazah){
     doc.fontSize(16).text(titleCase(ijazah.Tingkat), 636, 248, {align:'left'})
     doc.fontSize(16).text(titleCase(ijazah.Prodi), 72, 300, {align:'center'})
     doc.fontSize(16).text(dateToString(ijazah.GraduationDate), 430, 328, {align:'left'})
-    let gelar = titleCase(ijazah.Gelar) + " (" + ijazah.SingkatanGelar + ") "
+    let gelar = titleCase(ijazah.Gelar) + " (" + ijazah.SingkatanGelar + ")"
     if (ijazah.Predikat != ""){
-        gelar = gelar + "dengan Predikat " + titleCase(ijazah.Predikat)
+        gelar = gelar + " dengan Predikat " + titleCase(ijazah.Predikat)
     }
     doc.fontSize(16).text(gelar, 72, 384, {align:'center'})
     doc.fontSize(16).text(ijazah.City + ", " + ijazah.Province + " ", -80, 440, {align:'center'})
@@ -92,10 +92,10 @@ async function createIjazahPDFLowerEd(ijazah){
     doc.fontSize(16).text(ijazah.InstitutionName, 68, 298, { align:'center' })
     doc.fontSize(16).text(ijazah.City, 180, 328, { align:'center' })
     doc.fontSize(16).text(ijazah.Province,-35, 358, { align:'center' })
-    doc.fontSize(16).text(ijazah.StudentName,245, 388, { align:'left' })
-    doc.fontSize(16).text(ijazah.BirthPlace + ", " + dateToString(ijazah.BirthDate),245, 418, { align:'left' })
-    doc.fontSize(16).text(ijazah.StudentNumber,245, 448, { align:'left' })
-    doc.fontSize(16).text(ijazah.NIK,245, 478, { align:'left' })
+    doc.fontSize(16).text(ijazah.StudentName,290, 388, { align:'left' })
+    doc.fontSize(16).text(ijazah.BirthPlace + ", " + dateToString(ijazah.BirthDate),290, 418, { align:'left' })
+    doc.fontSize(16).text(ijazah.StudentNumber,290, 448, { align:'left' })
+    doc.fontSize(16).text(ijazah.NIK,290, 478, { align:'left' })
 
     doc.fontSize(16).text(dateToString(ijazah.GraduationDate),235, 568, { align:'center' })
     doc.fontSize(16).text(ijazah.City + ", " + dateToString(ijazah.IssueDate), 310, 685, { align:'left' })
