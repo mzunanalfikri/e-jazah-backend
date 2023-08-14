@@ -39,7 +39,7 @@ jobs:
         with:
       #     publishToken: ${{ secrets.SEMGREP_APP_TOKEN }}
       #     publishDeployment: ${{ secrets.SEMGREP_DEPLOYMENT_ID }}
-          generateSarif: "1"
+          script: semgrep scan --sarif --output=semgrep.sarif
 
       # Upload SARIF file generated in previous step
       - name: Upload SARIF file
