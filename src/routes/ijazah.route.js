@@ -19,6 +19,7 @@ router.get('/:nik', ijazahController.getIjazahByUserCheckLink)
 router.post('/verify-by-id', ijazahController.verifyIjazahById)
 
 // verify by content
+// not used
 router.post('/verify-content', ijazahController.verifyIjazahContent)
 
 // get all ijazah

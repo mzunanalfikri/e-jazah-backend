@@ -136,5 +136,10 @@ async function getUser(org1UserId) {
 //     console.log("Invalid command");
 // }
 
-getAdmin()
-getUser("backend-system")
+async function main(){
+    getAdmin()
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    getUser("backend-system")
+}
+
+main()
