@@ -38,6 +38,7 @@ jobs:
       - uses: returntocorp/semgrep-action@v1
         with:
           config: p/ci
+          generateSarif: "1"
 
       # Upload SARIF file generated in previous step
       - name: Upload SARIF file
